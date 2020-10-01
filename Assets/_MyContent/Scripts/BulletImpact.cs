@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class BulletImpact : MonoBehaviour
 {
-    // checks if bullet has hit an object to destroy it
-    private void OnCollisionEnter(Collision collision)
+    public float damage = 10f;
+
+
+
+    // checks if bullet has hit an object
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "something")
+        if (other.gameObject.tag == "Enemy")
         {
-            Destroy(gameObject);
+            EnemyHealth eHealth = other.gameObject.GetComponent<EnemyHealth>();
+            eHealth.health -= damage;
         }
-
+        if (other.gameObject.tag == "Player")
+        {
+            // add player script
+        }
+        Destroy(gameObject);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
+
+    

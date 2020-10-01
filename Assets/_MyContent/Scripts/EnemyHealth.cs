@@ -36,7 +36,6 @@ public class EnemyHealth : MonoBehaviour
         {
             health = maxHealth;
         }
-
     }
 
     float CalculateHealth()
