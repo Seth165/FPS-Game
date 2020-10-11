@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireGun : MonoBehaviour
+public class EnemyFire : MonoBehaviour
 {
+    public float attackRate = 3f;
+
+    // Beign firing when player gets too close
+    
+
+
     // Start is called before the first frame update
     void Start()
     {

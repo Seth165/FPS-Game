@@ -5,34 +5,51 @@ using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public float playerDistance = 3f;
-    public float movementSpeed = 4f;
+    // this will stop the enemy from moving when it reaches this distance
+    public float PlayerDistance = 8f;
 
-    [HideInInspector]
-    public Transform playerTransform;
-    [HideInInspector]
-    NavMeshAgent agent;
-    Rigidbody r;
-    
-    // Start is called before the first frame update
-    void Start()
+    // reference to Player
+    private GameObject m_Player;
+    // A refence to the NavMeshAgent Component
+    private NavMeshAgent m_NavAgent;
+    // reference to the rigidbody component
+    private Rigidbody m_Rigidbody;
+
+    // this will be set to true once the tank is meant to follow
+    private bool m_Follow;
+
+    private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.stoppingDistance = playerDistance;
-        agent.speed = movementSpeed;
-        r = GetComponent<Rigidbody>();
-        r.useGravity = false;
-        r.isKinematic = true;
+        m_Player = GameObject.FindGameObjectWithTag("Player");
+        m_NavAgent = GetComponent<NavMeshAgent>();
+        m_Rigidbody = GetComponent<Rigidbody>();
+        m_Follow = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        // Move towards the player
-        agent.destination = playerTransform.position;
-        // Always look at the player
-        transform.LookAt(new Vector3(playerTransform.transform.position.x, transform.position.y, playerTransform.position.z));
-        // Reduce Rigidbody velocity when force is applied from bullet
-        r.velocity *= 0.99f;
+        // when the enemy is attacking, kinematic is set to false
+        m_Rigidbody.isKinematic = false;
+    }
+    private void OnDisable()
+    {
+        // when the enemy is not attacking it goes back to being kinematic
+        m_Rigidbody.isKinematic = true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            m_Follow = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag "Player")
+        {
+            m_Follow = false;
+        } 
+         
     }
 }

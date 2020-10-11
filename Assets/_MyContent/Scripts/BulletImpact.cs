@@ -11,14 +11,16 @@ public class BulletImpact : MonoBehaviour
     // checks if bullet has hit an object
     private void OnTriggerEnter(Collider other)
     {
+        // if the bullet has hit an enemy
         if (other.gameObject.tag == "Enemy")
         {
             EnemyHealth eHealth = other.gameObject.GetComponent<EnemyHealth>();
             eHealth.health -= damage;
         }
+        // if the bullet hits the player
         if (other.gameObject.tag == "Player")
         {
-            // add player script
+            
         }
         Destroy(gameObject);
     }
