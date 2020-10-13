@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class EnemyMovement : MonoBehaviour
 {
     // this will stop the enemy from moving when it reaches this distance
-    public float PlayerDistance = 8f;
+    public float PlayerDistance = 3f;
 
     // reference to Player
     private GameObject m_Player;
@@ -49,7 +49,26 @@ public class EnemyMovement : MonoBehaviour
         if (other.tag == "Player")
         {
             m_Follow = false;
-        } 
-         
+        }
+    }
+
+    private void Update()
+    {
+        if (m_Follow == false)
+        {
+            return;
+        }
+
+        float distance = (m_Player.transform.position - transform.position).magnitude;
+
+        if (distance > PlayerDistance)
+        {
+            m_NavAgent.SetDestination(m_Player.transform.position);
+            m_NavAgent.isStopped = false;
+        }
+        else
+        {
+            m_NavAgent.isStopped = true;
+        }
     }
 }

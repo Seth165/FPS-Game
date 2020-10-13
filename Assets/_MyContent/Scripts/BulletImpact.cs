@@ -16,13 +16,17 @@ public class BulletImpact : MonoBehaviour
         {
             EnemyHealth eHealth = other.gameObject.GetComponent<EnemyHealth>();
             eHealth.health -= damage;
+            Destroy(gameObject);
         }
         // if the bullet hits the player
         if (other.gameObject.tag == "Player")
         {
             
         }
-        Destroy(gameObject);
+        if (other.gameObject.tag == "Environment")
+        {
+            Destroy(gameObject);
+        }
     }
 
 }
