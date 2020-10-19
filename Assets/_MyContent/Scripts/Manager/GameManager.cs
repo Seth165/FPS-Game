@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,23 +23,17 @@ public class GameManager : MonoBehaviour
         GameOver
     };
 
-    private GameState gState;
-    public GameState State { get { return gState; } }
-
-    private void Awake()
-    {
-        gState = GameState.Start;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
-        
+        if (GameObject.FindWithTag("Player") == null)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        }
+
+        if (GameObject.FindWithTag("Enemy") == null)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        }
     }
 }

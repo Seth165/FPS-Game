@@ -21,7 +21,9 @@ public class BulletImpact : MonoBehaviour
         // if the bullet hits the player
         if (other.gameObject.tag == "Player")
         {
-            
+            Player pHealth = other.gameObject.GetComponent<Player>();
+            pHealth.health -= damage;
+            Destroy(gameObject);
         }
         if (other.gameObject.tag == "Environment")
         {

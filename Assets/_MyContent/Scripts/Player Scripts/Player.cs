@@ -1,35 +1,45 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public int maxHealth = 100;
-    public int currentHealth;
+    public float health = 100;
+    public float maxHealth = 100;
 
-    public PlayerHealthUI healthBar;
+    public GameObject playerHealthBarUI;
+    public Slider slider;
     
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        health = maxHealth;
+        slider.value = CalculatePlayerHealth();
     }
 
-    // Checks if a bullet has collided with the player
-    private void OnTriggerEnter(Collider other)
+    void Update()
     {
-        if(other.gameObject.tag == "Bullet")
+        slider.value = CalculatePlayerHealth();
+
+        if(health < maxHealth)
         {
-            TakeDamage(10);
+            playerHealthBarUI.SetActive(true);
+        }
+
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+        }
+
+        if(health > maxHealth)
+        {
+            health = maxHealth;
         }
     }
 
-    // If a bullet has hit the player it reduces the player health
-    private void TakeDamage(int damage)
+    float CalculatePlayerHealth()
     {
-        currentHealth -= damage;
-
-        healthBar.SetHealth(currentHealth);
+        return health / maxHealth;
     }
 }
